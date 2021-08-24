@@ -1,4 +1,4 @@
-Arduino Program
+//Arduino Program
 
 #include <dht.h>
 #define DHT22_PIN 7
@@ -17,5 +17,5 @@ void loop() {
   delay(5000);
 }
 
-Node-red Program
-https://github.com/choyoungyeol/SmartFarm/issues/1#issue-973231282
+//Node-red Program
+//https://github.com/choyoungyeol/SmartFarm/issues/1#issue-973231282

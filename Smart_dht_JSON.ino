@@ -1,5 +1,5 @@
 #include <dht.h>
-#define DHT22_PIN 7
+#define DHT11_PIN 12
 
 dht DHT;
 
@@ -8,11 +8,11 @@ void setup() {
 }
 
 void loop() {
-  float chk = DHT.read22(DHT22_PIN);
+  float chk = DHT.read11(DHT11_PIN);
   Serial.print("{\"temp\":");
-  Serial.print(DHT.temperature, 1);
+  Serial.print(DHT.temperature);
   Serial.print(",\"humidity\":");
-  Serial.print(DHT.humidity, 1);
+  Serial.print(DHT.humidity);
   Serial.println("}");
   delay(5000);
 }

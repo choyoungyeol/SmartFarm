@@ -1,7 +1,7 @@
 //Arduino Program
 
 #include <dht.h>
-#define DHT22_PIN 7
+#define DHT11_PIN 12
 
 dht DHT;
 
@@ -10,10 +10,10 @@ void setup() {
 }
 
 void loop() {
-  float chk = DHT.read22(DHT22_PIN);
-  Serial.print(DHT.temperature, 1);
+  float chk = DHT.read11(DHT11_PIN);
+  Serial.print(DHT.temperature);
   Serial.print(",");
-  Serial.println(DHT.humidity, 1);
+  Serial.println(DHT.humidity);
   delay(5000);
 }
 

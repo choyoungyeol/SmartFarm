@@ -1,0 +1,246 @@
+//Arduino
+#include "DHT.h" //DHT 라이브러리 호출
+#include <DigitShield.h> //DigitShield.h 라이브러리 호출
+#define DHTPIN 12     // 온습도 센서가 12번에 연결
+#define DHTTYPE DHT11   // DHT11 온습도 센서 사용
+DHT dht(DHTPIN, DHTTYPE); //DHT 설정(12,DHT11)
+
+int motor = 10; //모터 릴레이 핀
+int water = 0 ; // water 변수 선언
+
+void setup()
+{
+  Serial.begin(9600); //통신속도 9600으로 통신 시작
+  DigitShield.begin();
+  dht.begin();
+  Serial.begin(9600);
+  pinMode(motor, OUTPUT);
+
+}
+//10
+void loop() {
+  delay(500);
+  float h = dht.readHumidity(); //습도값을 h에 저장
+  float t = dht.readTemperature(); //온도값을 t에 저장
+  float f = dht.readTemperature(true);// 화씨 온도를 측정합니다.
+  float hif = dht.computeHeatIndex(f, h);
+  float hic = dht.computeHeatIndex(t, h, false);
+  DigitShield.setValue(h);
+  delay(500);
+  DigitShield.setValue(t);
+  delay(500);
+  water = analogRead(A3);           //토양 습도 센서 아날로그핀 A3 번 사용 , A3 값 읽어와 water에 저장
+  DigitShield.setValue(water);
+
+  Serial.print(t); //습도값 출력
+  Serial.print(",");
+  Serial.print(h); //온도값 출력
+  Serial.print(",");
+  Serial.println(water);
+
+  if ( water > 400)   // 토양 습도 체크 800보다 낮으면 모터 동작 시켜 물공급 아니면 정지
+  {
+    digitalWrite(motor, HIGH);
+  }
+  else   {
+    digitalWrite(motor, LOW);
+  }
+}
+
+//node-red
+[
+    {
+        "id": "3bcac8835da98423",
+        "type": "tab",
+        "label": "플로우 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e53845c015727550",
+        "type": "serial in",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "serial": "0ea2fcaaccbfa388",
+        "x": 153.2869110107422,
+        "y": 199.67896270751953,
+        "wires": [
+            [
+                "b3d5aeb298f9229a",
+                "ab977307206ff427",
+                "61c107f6359d5602"
+            ]
+        ]
+    },
+    {
+        "id": "b3d5aeb298f9229a",
+        "type": "function",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar temperature = parseFloat(output[0]);\nvar msg = {payload:temperature};\nreturn [msg];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 302.28975677490234,
+        "y": 199.64484024047852,
+        "wires": [
+            [
+                "862e217e24bf96ae"
+            ]
+        ]
+    },
+    {
+        "id": "862e217e24bf96ae",
+        "type": "ui_gauge",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "group": "b77ded9d1d746205",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "oC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 475.29261779785156,
+        "y": 199.83805084228516,
+        "wires": []
+    },
+    {
+        "id": "ab977307206ff427",
+        "type": "function",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar humidity = parseFloat(output[1]);\nvar msg = {payload:humidity};\nreturn [msg];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 308.0142364501953,
+        "y": 283.00567054748535,
+        "wires": [
+            [
+                "23695fd7e65a84bf"
+            ]
+        ]
+    },
+    {
+        "id": "61c107f6359d5602",
+        "type": "function",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar water = parseFloat(output[2]);\nvar msg = {payload:water};\nreturn [msg];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 314.0142288208008,
+        "y": 362.0056667327881,
+        "wires": [
+            [
+                "c7b9d7681f880626"
+            ]
+        ]
+    },
+    {
+        "id": "23695fd7e65a84bf",
+        "type": "ui_gauge",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "group": "b77ded9d1d746205",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 476.28404235839844,
+        "y": 281.3835220336914,
+        "wires": []
+    },
+    {
+        "id": "c7b9d7681f880626",
+        "type": "ui_gauge",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "group": "b77ded9d1d746205",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Water",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "600",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 488.2869110107422,
+        "y": 360.3749771118164,
+        "wires": []
+    },
+    {
+        "id": "0ea2fcaaccbfa388",
+        "type": "serial-port",
+        "serialport": "COM18",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "b77ded9d1d746205",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "190c058d17d2c22c",
+        "order": 1,
+        "disp": true,
+        "width": 6
+    },
+    {
+        "id": "190c058d17d2c22c",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

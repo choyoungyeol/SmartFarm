@@ -1,24 +1,19 @@
-#include <SimpleDHT.h>
-#define pinDHT11 12
+#include "DHT.h"
+#define DHTPIN 12
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
 
-SimpleDHT11 dht11(pinDHT11);
-
-void setup()
-{
+void setup() {
   Serial.begin(9600);
 }
-
-
-void loop()
-{
-  byte temperature = 0;
-  byte humidity = 0;
-  dht11.read(&temperature, &humidity, NULL);
+void loop() {
+  delay(2000);
+  int h = dht.readHumidity();
+  int t = dht.readTemperature();
   Serial.print("Humidity: ");
-  Serial.print(humidity);
+  Serial.print(h);
   Serial.print(" %\t");
   Serial.print("Temperature: ");
-  Serial.print(temperature);
+  Serial.print(t);
   Serial.println(" C");
-  delay(2000);
 }

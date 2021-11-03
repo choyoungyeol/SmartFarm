@@ -140,6 +140,20 @@ void loop()
 
   lcd.clear();
   lcd.setCursor(0, 0);
+  lcd.print(now.year());
+  lcd.print("/");
+  lcd.print(now.month());
+  lcd.print("/");
+  lcd.print(now.day());
+  lcd.setCursor(0, 1);
+  lcd.print(now.hour());
+  lcd.print(" hour: ");
+  lcd.print(now.minute());
+  lcd.print(" min");
+  delay(5000);
+  
+  lcd.clear();
+  lcd.setCursor(0, 0);
   lcd.print("Lux= ");
   lcd.print(Ea);
   lcd.setCursor(0, 1);

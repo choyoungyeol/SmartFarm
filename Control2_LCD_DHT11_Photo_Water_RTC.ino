@@ -21,6 +21,7 @@ Servo myservo;
 int Photo_Value = 0;
 int pos = 0;
 int Auto = 1;
+String readString;
 
 void setup()
 {

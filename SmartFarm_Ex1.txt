@@ -1,0 +1,424 @@
+//아두이노 
+
+#include "DHT.h"
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+#include "RTClib.h"
+#include <Servo.h>
+
+#define PHOTO A0
+#define Water_Pin A1
+#define DHTPIN 12
+#define DHTTYPE DHT11
+#define servoPin 9
+#define Fan 32
+#define Light 4
+#define Pump 31
+
+DHT dht(DHTPIN, DHTTYPE);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+RTC_DS3231 rtc;
+Servo myservo;
+
+int Photo_Value = 0;
+int pos = 0;
+int Auto = 1;
+char c;
+
+void setup()
+{
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(1, 0);
+  lcd.print("JNU SmartFarm");
+  lcd.setCursor(0, 1);
+  lcd.print("Jeju Nat'l Univ.");
+  delay(5000);
+  myservo.attach(servoPin);
+  myservo.write(0);
+  pinMode(Fan, OUTPUT);
+  pinMode(Light, OUTPUT);
+  pinMode(Pump, OUTPUT);
+
+  if (! rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    while (1);
+  }
+
+  if (rtc.lostPower()) {
+    Serial.println("RTC lost power, lets set the time!");
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  } else {
+    rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
+  }
+  Serial.begin(9600);
+  Serial1.begin(9600);
+}
+
+void loop()
+{
+  DateTime now = rtc.now();
+  int humidity = dht.readHumidity();
+  int temperature = dht.readTemperature();
+  Photo_Value = analogRead(PHOTO);
+  float pv_value = float(Photo_Value * 5) / 1023;
+  float Rp = (10 * pv_value) / (5 - pv_value);
+  float y = (log10(200 / Rp)) / 0.7;
+  float Ea = pow(10, y);
+
+  int Water = analogRead(Water_Pin);
+  int Water_Content = map(Water, 518, 272, 0, 100);
+
+  if (Water_Content >= 100) {
+    Water_Content = 100;
+  }
+  if (Water_Content <= 0) {
+    Water_Content = 0;
+  }
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(now.year());
+  lcd.print("/");
+  lcd.print(now.month());
+  lcd.print("/");
+  lcd.print(now.day());
+  lcd.setCursor(0, 1);
+  lcd.print(now.hour());
+  lcd.print(" hour: ");
+  lcd.print(now.minute());
+  lcd.print(" min");
+  delay(5000);
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Lux= ");
+  lcd.print(Ea);
+  lcd.setCursor(0, 1);
+  lcd.print("Water= ");
+  lcd.print(Water_Content);
+  lcd.print(" %");
+  delay(5000);
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Temp= ");
+  lcd.print(temperature);
+  lcd.print(" oC");
+  lcd.setCursor(0, 1);
+  lcd.print("R  H= ");
+  lcd.print(humidity);
+  lcd.print(" %");
+  delay(5000);
+
+  if (Auto == 1) {
+    if (now.hour() >= 6 && now.hour() <= 18) {
+      if (Ea <= 500) {
+        digitalWrite(Light, HIGH);
+      } else {
+        digitalWrite(Light, LOW);
+      }
+      if (temperature >= 25) {
+        digitalWrite(Fan, HIGH);
+        myservo.write(90);
+
+      } else {
+        digitalWrite(Fan, LOW);
+        myservo.write(0);
+      }
+    } else {
+      digitalWrite(Light, LOW);
+      if (temperature >= 25) {
+        digitalWrite(Fan, HIGH);
+        myservo.write(90);
+      } else {
+        digitalWrite(Fan, LOW);
+        myservo.write(0);
+      }
+    }
+  }
+  if (Serial1.available()) {
+    delay(3);
+    char c = Serial1.read();
+    if (c == 'x') {
+      Auto = 1;
+    }
+    if (c == 'y') {
+      Auto = 0;
+    }
+    if (c == 'a') {
+      digitalWrite(Light, HIGH);
+    }
+    if (c == 'b') {
+      digitalWrite(Light, LOW);
+    }
+    if (c == 'c') {
+      digitalWrite(Pump, HIGH);
+    }
+    if (c == 'd') {
+      digitalWrite(Pump, LOW);
+    }
+    if (c == 'e') {
+      myservo.write(90);
+    }
+    if (c == 'f') {
+      myservo.write(0);
+    }
+    if (c == 'g') {
+      digitalWrite(Fan, HIGH);
+    }
+    if (c == 'h') {
+      digitalWrite(Fan, LOW);
+    }
+  }
+  Auto = Auto;
+  String data = String(Ea) + "," + String(Water_Content) + "," + String(temperature) + "," + String(humidity) + "," + String(Auto) ;
+  Serial.println(data);
+  Serial1.println(data);
+  delay(2000);
+}
+
+//노드레드 코드
+[
+    {
+        "id": "3bcac8835da98423",
+        "type": "tab",
+        "label": "플로우 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e53845c015727550",
+        "type": "serial in",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "serial": "90c2d770290e3da8",
+        "x": 117.28691101074219,
+        "y": 315.678955078125,
+        "wires": [
+            [
+                "b3d5aeb298f9229a",
+                "ab977307206ff427",
+                "61c107f6359d5602",
+                "77ba457cb0a2d959"
+            ]
+        ]
+    },
+    {
+        "id": "b3d5aeb298f9229a",
+        "type": "function",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar Ea = parseFloat(output[0]);\nvar msg = {payload:Ea};\nreturn [msg];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 302.28975677490234,
+        "y": 199.64484024047852,
+        "wires": [
+            [
+                "862e217e24bf96ae"
+            ]
+        ]
+    },
+    {
+        "id": "862e217e24bf96ae",
+        "type": "ui_gauge",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "group": "b77ded9d1d746205",
+        "order": 1,
+        "width": 6,
+        "height": 5,
+        "gtype": "gage",
+        "title": "Light",
+        "label": "Lux",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 479.2926330566406,
+        "y": 199.83804893493652,
+        "wires": []
+    },
+    {
+        "id": "ab977307206ff427",
+        "type": "function",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar WC = parseFloat(output[1]);\nvar msg = {payload:WC};\nreturn [msg];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 308.0142364501953,
+        "y": 283.00567054748535,
+        "wires": [
+            [
+                "23695fd7e65a84bf"
+            ]
+        ]
+    },
+    {
+        "id": "61c107f6359d5602",
+        "type": "function",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar temp = parseFloat(output[2]);\nvar msg = {payload:temp};\nreturn [msg];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 314.0142288208008,
+        "y": 362.0056667327881,
+        "wires": [
+            [
+                "c7b9d7681f880626"
+            ]
+        ]
+    },
+    {
+        "id": "23695fd7e65a84bf",
+        "type": "ui_gauge",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "group": "b77ded9d1d746205",
+        "order": 2,
+        "width": 6,
+        "height": 5,
+        "gtype": "wave",
+        "title": "Water Content",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 492.28406524658203,
+        "y": 282.3835115432739,
+        "wires": []
+    },
+    {
+        "id": "c7b9d7681f880626",
+        "type": "ui_gauge",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "group": "b77ded9d1d746205",
+        "order": 3,
+        "width": 6,
+        "height": 5,
+        "gtype": "donut",
+        "title": "Temperature",
+        "label": "oC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 491.2869338989258,
+        "y": 362.3749580383301,
+        "wires": []
+    },
+    {
+        "id": "77ba457cb0a2d959",
+        "type": "function",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar RH = parseFloat(output[3]);\nvar msg = {payload:RH};\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 311.28407287597656,
+        "y": 438.82669830322266,
+        "wires": [
+            [
+                "f503bba010e93ce3"
+            ]
+        ]
+    },
+    {
+        "id": "f503bba010e93ce3",
+        "type": "ui_gauge",
+        "z": "3bcac8835da98423",
+        "name": "",
+        "group": "b77ded9d1d746205",
+        "order": 4,
+        "width": 6,
+        "height": 5,
+        "gtype": "wave",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 484.2869300842285,
+        "y": 439.65621185302734,
+        "wires": []
+    },
+    {
+        "id": "90c2d770290e3da8",
+        "type": "serial-port",
+        "serialport": "COM5",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "b77ded9d1d746205",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "190c058d17d2c22c",
+        "order": 1,
+        "disp": true,
+        "width": 12
+    },
+    {
+        "id": "190c058d17d2c22c",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

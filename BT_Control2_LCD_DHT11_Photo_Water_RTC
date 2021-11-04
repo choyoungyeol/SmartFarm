@@ -1,3 +1,6 @@
+#include "DHT.h"
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 #include "RTClib.h"
 #include <Servo.h>
@@ -9,6 +12,7 @@
 #define servoPin 9
 #define Fan 32
 #define Light 4
+#define Pump 31
 
 DHT dht(DHTPIN, DHTTYPE);
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -18,7 +22,7 @@ Servo myservo;
 int Photo_Value = 0;
 int pos = 0;
 int Auto = 1;
-String readString;
+char c;
 
 void setup()
 {
@@ -30,8 +34,10 @@ void setup()
   lcd.print("Jeju Nat'l Univ.");
   delay(5000);
   myservo.attach(servoPin);
+  myservo.write(0);
   pinMode(Fan, OUTPUT);
   pinMode(Light, OUTPUT);
+  pinMode(Pump, OUTPUT);
 
   if (! rtc.begin()) {
     Serial.println("Couldn't find RTC");
@@ -43,9 +49,7 @@ void setup()
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
   } else {
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-
   }
-
   Serial.begin(9600);
   Serial1.begin(9600);
 }
@@ -106,15 +110,9 @@ void loop()
   lcd.print(" %");
   delay(5000);
 
-  while (Serial1.available()) {
-    delay(3);
-    char c = Serial1.read();
-    readString += c;
-  }
-
   if (Auto == 1) {
     if (now.hour() >= 6 && now.hour() <= 18) {
-      if (Ea <= 10000) {
+      if (Ea <= 500) {
         digitalWrite(Light, HIGH);
       } else {
         digitalWrite(Light, LOW);
@@ -137,80 +135,44 @@ void loop()
         myservo.write(0);
       }
     }
-  } else {                             //Auto == 0
-    if (readString.length() > 0) {
-      if (readString = "x") {
-        Auto = 1;
-      }
-      if (readString = "y") {
-        Auto = 0;
-      }
-
-      if (readString = "a") {
-        digitalWrite(Light, HIGH);
-      }
-      if (readString = "b") {
-        digitalWrite(Light, LOW);
-      }
-
-      if (readString = "c") {
-        digitalWrite(Fan, HIGH);
-      }
-      if (readString = "d") {
-        digitalWrite(Fan, LOW);
-      }
-
-      if (readString = "e") {
-        myservo.write(90);
-      }
-      if (readString = "f") {
-        myservo.write(0);
-      }
-
-      if (readString = "0") {
-        analogWrite(Light, 0);
-      }
-
-      if (readString = "1") {
-        analogWrite(Light, 25);
-      }
-      if (readString = "2") {
-        analogWrite(Light, 75);
-      }
-      if (readString = "3") {
-        analogWrite(Light, 100);
-      }
-      if (readString = "4") {
-        analogWrite(Light, 125);
-      }
-      if (readString = "5") {
-        analogWrite(Light, 150);
-      }
-      if (readString = "6") {
-        analogWrite(Light, 175);
-      }
-      if (readString = "7") {
-        analogWrite(Light, 200);
-      }
-      if (readString = "8") {
-        analogWrite(Light, 225);
-      }
-      if (readString = "9") {
-        analogWrite(Light, 250);
-      }
-    }
   }
-
-  if (readString.length() > 0) {
-    if (readString = "x") {
+  if (Serial1.available()) {
+    delay(3);
+    char c = Serial1.read();
+    if (c == 'x') {
       Auto = 1;
     }
-    if (readString = "y") {
+    if (c == 'y') {
       Auto = 0;
+    }
+    if (c == 'a') {
+      digitalWrite(Light, HIGH);
+    }
+    if (c == 'b') {
+      digitalWrite(Light, LOW);
+    }
+    if (c == 'c') {
+      digitalWrite(Pump, HIGH);
+    }
+    if (c == 'd') {
+      digitalWrite(Pump, LOW);
+    }
+    if (c == 'e') {
+      myservo.write(90);
+    }
+    if (c == 'f') {
+      myservo.write(0);
+    }
+    if (c == 'g') {
+      digitalWrite(Fan, HIGH);
+    }
+    if (c == 'h') {
+      digitalWrite(Fan, LOW);
     }
   }
   Auto = Auto;
-
-  String data = String(Ea) + "," + String(Water_Content) + "," + String(temperature) + "," + String(humidity) + "," + String(Auto);
+  String data = String(Ea) + "," + String(Water_Content) + "," + String(temperature) + "," + String(humidity) + "," + String(Auto) ;
   Serial.println(data);
+  Serial1.println(data);
+  delay(2000);
 }

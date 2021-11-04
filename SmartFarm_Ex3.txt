@@ -1,0 +1,311 @@
+//카메라 모드
+[
+    {
+        "id": "4991b0464c1f698f",
+        "type": "tab",
+        "label": "SF_OP1_Cam Capture",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b3532f35919a454f",
+        "type": "inject",
+        "z": "4991b0464c1f698f",
+        "name": "Debug-Image Capture",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "1122c317e10f4e43"
+            ]
+        ]
+    },
+    {
+        "id": "1122c317e10f4e43",
+        "type": "http request",
+        "z": "4991b0464c1f698f",
+        "name": "Image Capture Command",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "http://192.168.0.10/capture",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 460,
+        "y": 120,
+        "wires": [
+            [
+                "a56db7b4a7c0b939",
+                "621d3fb8fb0ecf53"
+            ]
+        ]
+    },
+    {
+        "id": "a56db7b4a7c0b939",
+        "type": "base64",
+        "z": "4991b0464c1f698f",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 700,
+        "y": 120,
+        "wires": [
+            [
+                "22f4919944917e86",
+                "cb0306f3bb8c677b"
+            ]
+        ]
+    },
+    {
+        "id": "22f4919944917e86",
+        "type": "template",
+        "z": "4991b0464c1f698f",
+        "name": "Img width Setting",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<img width=\"640px\" height=\"480px\" src=\"data:image/jpg;base64,{{{payload}}}\">",
+        "output": "str",
+        "x": 713.9999923706055,
+        "y": 192.99997901916504,
+        "wires": [
+            [
+                "c1841bc0e622244e"
+            ]
+        ]
+    },
+    {
+        "id": "c1841bc0e622244e",
+        "type": "ui_template",
+        "z": "4991b0464c1f698f",
+        "group": "b1d5cbd6.805608",
+        "name": "Capture Image",
+        "order": 2,
+        "width": 13,
+        "height": 10,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 715.9999923706055,
+        "y": 264.99997329711914,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb0306f3bb8c677b",
+        "type": "image",
+        "z": "4991b0464c1f698f",
+        "name": "",
+        "width": 160,
+        "data": "payload",
+        "dataType": "msg",
+        "thumbnail": false,
+        "active": true,
+        "pass": false,
+        "outputs": 0,
+        "x": 973.9999885559082,
+        "y": 123.99998474121094,
+        "wires": []
+    },
+    {
+        "id": "0a4cafc2fb1346e0",
+        "type": "ui_button",
+        "z": "4991b0464c1f698f",
+        "name": "",
+        "group": "b1d5cbd6.805608",
+        "order": 7,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "label": "Camera Capture",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "1122c317e10f4e43"
+            ]
+        ]
+    },
+    {
+        "id": "6aed02bb175b6983",
+        "type": "file",
+        "z": "4991b0464c1f698f",
+        "name": "",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 444,
+        "y": 303.99997997283936,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "621d3fb8fb0ecf53",
+        "type": "function",
+        "z": "4991b0464c1f698f",
+        "name": "",
+        "func": "var d = new Date();\nvar t = d.getTime();\nvar year = d.getFullYear();\nvar month = d.getMonth()+1; \nif(month.toString().length == 1) {\n    var month = '0'+month;\n}\nvar day = d.getDate();\nvar hour  = d.getHours();\nif(hour < 10) {\n    var hour = '0'+hour;\n}\nvar min = d.getMinutes();\nif(min < 10) {\n    var min = '0'+min;\n}\nvar sec = d.getSeconds();\nif(sec < 10) {\n    var sec = '0'+sec;\n}\nmsg.date = t;\nmsg.filename = \"C:/test_image/\"+year+month+day+hour+min+sec+\".jpg\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 219.99999237060547,
+        "y": 300.99997901916504,
+        "wires": [
+            [
+                "6aed02bb175b6983",
+                "19d7fb71bf68da39"
+            ]
+        ]
+    },
+    {
+        "id": "19d7fb71bf68da39",
+        "type": "debug",
+        "z": "4991b0464c1f698f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "filename",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 446,
+        "y": 368.9999723434448,
+        "wires": []
+    },
+    {
+        "id": "6bd259074162e097",
+        "type": "ui_template",
+        "z": "4991b0464c1f698f",
+        "group": "b1d5cbd6.805608",
+        "name": "Strreaming Image",
+        "order": 1,
+        "width": 13,
+        "height": 10,
+        "format": "<div>\n    <img src=\"http://192.168.0.10:81/stream\" width=\"640px\">\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "x": 190,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "45466d545edd823e",
+        "type": "ui_text",
+        "z": "4991b0464c1f698f",
+        "group": "b1d5cbd6.805608",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Live",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 192.99999237060547,
+        "y": 396.99996757507324,
+        "wires": []
+    },
+    {
+        "id": "afe9fa1147b949b0",
+        "type": "ui_text",
+        "z": "4991b0464c1f698f",
+        "group": "b1d5cbd6.805608",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Capture Image",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 457,
+        "y": 438.99996757507324,
+        "wires": []
+    },
+    {
+        "id": "880ab0c0a5444b80",
+        "type": "ui_spacer",
+        "z": "4991b0464c1f698f",
+        "name": "spacer",
+        "group": "b1d5cbd6.805608",
+        "order": 4,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "6bf64c25158aaac7",
+        "type": "ui_spacer",
+        "z": "4991b0464c1f698f",
+        "name": "spacer",
+        "group": "b1d5cbd6.805608",
+        "order": 6,
+        "width": 5,
+        "height": 1
+    },
+    {
+        "id": "27d4fb3a4223c1cc",
+        "type": "ui_spacer",
+        "z": "4991b0464c1f698f",
+        "name": "spacer",
+        "group": "b1d5cbd6.805608",
+        "order": 8,
+        "width": 2,
+        "height": 1
+    },
+    {
+        "id": "b1d5cbd6.805608",
+        "type": "ui_group",
+        "name": "화상",
+        "tab": "eabe9ba8.3bb638",
+        "order": 1,
+        "disp": true,
+        "width": 26,
+        "collapse": false
+    },
+    {
+        "id": "eabe9ba8.3bb638",
+        "type": "ui_tab",
+        "name": "카메라",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    }
+]

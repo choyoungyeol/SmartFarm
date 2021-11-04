@@ -5,3 +5,9 @@ DIY_Greenhouse
 SmartFarm_Ex1.txt
 
 ![image](https://user-images.githubusercontent.com/60500365/140308143-02df92b2-6e7a-4110-b0f9-7dec0c2dcf70.png)
+
+
+SmartFarm_Ex2.txt
+
+![image](https://user-images.githubusercontent.com/60500365/140313373-7dd140d4-b949-4956-97ae-f1e925de7285.png)
+

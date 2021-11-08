@@ -4,8 +4,8 @@
 #define Light 4
 #define servoPin 9
 
-char ssid[] = "vegetables";            // your network SSID (name)
-char pass[] = "CYR1128!cyr";        // your network password
+char ssid[] = "**********";            // your network SSID (name)
+char pass[] = "**********";        // your network password
 int status = WL_IDLE_STATUS;     // the Wifi radio's status
 
 WiFiEspServer server(80);

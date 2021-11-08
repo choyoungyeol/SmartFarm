@@ -23,10 +23,11 @@ int Photo_Value = 0;
 int pos = 0;
 int Auto = 1;
 
-char ssid[] = "********";            // your network SSID (name)
-char pass[] = "********";        // your network password
+char ssid[] = "*********";            // your network SSID (name)
+char pass[] = "*********";        // your network password
 int status = WL_IDLE_STATUS;     // the Wifi radio's status
 WiFiEspServer server(80);
+String readString;
 
 void setup()
 {
@@ -233,14 +234,14 @@ void loop()
       }
 
       if (readString = "e") {
-        servo.write(90);
+        myservo.write(90);
       }
       if (readString = "f") {
-        servo.write(0);
+        myservo.write(0);
       }
 
       if (readString = "0") {
-        analogWrite(Light_Pin, 0);
+        analogWrite(Light, 0);
       }
 
       if (readString = "1") {

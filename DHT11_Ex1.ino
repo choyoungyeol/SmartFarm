@@ -18,16 +18,16 @@ void loop()
 {
   int humidity = dht.readHumidity();
   int temperature = dht.readTemperature();
-  
+
   if ((temperature <= -10) || (humidity > 100)) { //오류값에 대한 검증
     temperature = After_temperature; //이전값을 현재값에 입력
     humidity = After_humidity;
   }
   After_temperature = temperature; //현재값을 이전값에 입력
   After_humidity = humidity;
-  Serial.print(temperature, 1); //온도 현재값 출력
+  Serial.print(temperature); //온도 현재값 출력
   Serial.println(" C");
-  Serial.print(humidity, 1); //상대습도 현재값 출력
+  Serial.print(humidity); //상대습도 현재값 출력
   Serial.println(" %");
-  delay(1000);
+  delay(2000);
 }

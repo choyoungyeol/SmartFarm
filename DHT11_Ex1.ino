@@ -3,10 +3,8 @@
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 
-float temperature;
-float humidity;
-float After_temperature; //온도의 오류값을 대비한 변수
-float After_humidity; //상대습도의 오류값을 대비한 변수
+int After_temperature; //온도의 오류값을 대비한 변수
+int After_humidity; //상대습도의 오류값을 대비한 변수
 
 void setup()
 {

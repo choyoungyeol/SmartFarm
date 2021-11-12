@@ -3,8 +3,7 @@
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 
-void setup()
-{
+void setup(){
   Serial.begin(9600); //시리얼모니터 출력
   delay(300);
 }

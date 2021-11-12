@@ -9,22 +9,24 @@ void setup()
   delay(300);
 }
 
-void loop()
-{
-
-  for (int i = 0; i < 100; i++) { //평균온도
-    int temperature = dht.readTemperature();
-    delay(10);
-  }
-  temperature /= 10;
+void loop(){
+  int temperature = dht.readTemperature();
+  int humidity = dht.readHumidity();
   
-  for (int i = 0; i < 100; i++) { //평균상대습도
-    int humidity = dht.readHumidity();
+  for (int i = 0; i < 100; i++) { //평균온도
+    temperature += dht.readTemperature();
     delay(10);
   }
-  humidity /= 10;
-  Serial.print(temperature, 1); //평균온도값 출력
+  temperature /= 100;
+
+  for (int i = 0; i < 100; i++) { //평균상대습도
+    humidity += dht.readHumidity();
+    delay(10);
+  }
+  humidity /= 100;
+  Serial.print(temperature); //평균온도값 출력
   Serial.println(" C");
-  Serial.print(humidity, 1); //평균상대습도값 출력
+  Serial.print(humidity); //평균상대습도값 출력
   Serial.println(" %");
+  delay(2000);
 }

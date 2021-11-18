@@ -110,6 +110,12 @@ void loop()
   lcd.print(humidity);
   lcd.print(" %");
   delay(5000);
+  
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Mode = ");
+  lcd.print(Auto);
+  delay(5000);
 
   if (Auto == 1) {
     if (now.hour() >= 6 && now.hour() <= 18) {

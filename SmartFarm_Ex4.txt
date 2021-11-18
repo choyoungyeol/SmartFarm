@@ -1,3 +1,4 @@
+//아두이노 코드
 #include "DHT.h"
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
@@ -22,6 +23,11 @@ Servo myservo;
 int Photo_Value = 0;
 int pos = 0;
 int Auto = 1;
+int LightValue = 0;
+int FanValue = 0;
+int PumpValue = 0;
+int ServoValue = 0;
+
 char c;
 
 void setup()
@@ -110,29 +116,45 @@ void loop()
   lcd.print(" %");
   delay(5000);
 
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Mode = ");
+  lcd.print(Auto);
+  delay(5000);
+
+
   if (Auto == 1) {
     if (now.hour() >= 6 && now.hour() <= 18) {
       if (Ea <= 500) {
         digitalWrite(Light, HIGH);
+        LightValue = 1;
       } else {
         digitalWrite(Light, LOW);
+        LightValue = 0;
       }
       if (temperature >= 25) {
         digitalWrite(Fan, HIGH);
         myservo.write(90);
+        ServoValue = 1;
 
       } else {
         digitalWrite(Fan, LOW);
         myservo.write(0);
+        ServoValue = 0;
       }
     } else {
       digitalWrite(Light, LOW);
+      LightValue = 0;
       if (temperature >= 25) {
         digitalWrite(Fan, HIGH);
         myservo.write(90);
+        FanValue = 1;
+        ServoValue = 1;
       } else {
         digitalWrite(Fan, LOW);
         myservo.write(0);
+        FanValue = 0;
+        ServoValue = 0;
       }
     }
   }
@@ -147,27 +169,35 @@ void loop()
     }
     if (c == 'a') {
       digitalWrite(Light, HIGH);
+      LightValue = 1;
     }
     if (c == 'b') {
       digitalWrite(Light, LOW);
+      LightValue = 0;
     }
     if (c == 'c') {
       digitalWrite(Pump, HIGH);
+      PumpValue = 1;
     }
     if (c == 'd') {
       digitalWrite(Pump, LOW);
+      PumpValue = 0;
     }
     if (c == 'e') {
       myservo.write(90);
+      ServoValue = 1;
     }
     if (c == 'f') {
       myservo.write(0);
+      ServoValue = 0;
     }
     if (c == 'g') {
       digitalWrite(Fan, HIGH);
+      FanValue = 1;
     }
     if (c == 'h') {
       digitalWrite(Fan, LOW);
+      FanValue = 0;
     }
   }
   if (Serial.available()) {
@@ -181,32 +211,42 @@ void loop()
     }
     if (c == 'a') {
       digitalWrite(Light, HIGH);
+      LightValue = 1;
     }
     if (c == 'b') {
       digitalWrite(Light, LOW);
+      LightValue = 0;
     }
     if (c == 'c') {
       digitalWrite(Pump, HIGH);
+      PumpValue = 1;
     }
     if (c == 'd') {
       digitalWrite(Pump, LOW);
+      PumpValue = 0;
     }
     if (c == 'e') {
       myservo.write(90);
+      ServoValue = 1;
     }
     if (c == 'f') {
       myservo.write(0);
+      ServoValue = 0;
     }
     if (c == 'g') {
       digitalWrite(Fan, HIGH);
+      FanValue = 1;
     }
     if (c == 'h') {
       digitalWrite(Fan, LOW);
+      FanValue = 0;
     }
   }
   Auto = Auto;
-  String data = String(Ea) + "," + String(Water_Content) + "," + String(temperature) + "," + String(humidity) + "," + String(Auto) ;
+  String data = String(Ea) + "," + String(Water_Content) + "," + String(temperature) + "," + String(humidity) + "," + String(Auto) + "," + String(LightValue)+ "," + String(FanValue)+ "," + String(PumpValue)+ "," + String(ServoValue);
   Serial.println(data);
   Serial1.println(data);
   delay(2000);
 }
+
+//노드레드 코드

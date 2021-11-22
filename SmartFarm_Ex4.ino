@@ -93,7 +93,7 @@ void loop()
   lcd.print(" hour: ");
   lcd.print(now.minute());
   lcd.print(" min");
-  delay(5000);
+  delay(2000);
 
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -103,7 +103,7 @@ void loop()
   lcd.print("Water= ");
   lcd.print(Water_Content);
   lcd.print(" %");
-  delay(5000);
+  delay(2000);
 
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -114,14 +114,13 @@ void loop()
   lcd.print("R  H= ");
   lcd.print(humidity);
   lcd.print(" %");
-  delay(5000);
+  delay(2000);
 
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Mode = ");
   lcd.print(Auto);
-  delay(5000);
-
+  delay(2000);
 
   if (Auto == 1) {
     if (now.hour() >= 6 && now.hour() <= 18) {
@@ -246,7 +245,5 @@ void loop()
   String data = String(Ea) + "," + String(Water_Content) + "," + String(temperature) + "," + String(humidity) + "," + String(Auto) + "," + String(LightValue)+ "," + String(FanValue)+ "," + String(PumpValue)+ "," + String(ServoValue);
   Serial.println(data);
   Serial1.println(data);
-  delay(2000);
+  delay(1000);
 }
-
-//노드레드 코드

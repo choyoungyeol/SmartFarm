@@ -26,6 +26,11 @@ SmartFarm_Ex5.json
 ![그림1](https://user-images.githubusercontent.com/60500365/143161575-fcfc7e7b-2a6b-4c88-b3dc-583df3a1675c.png)
 
 
+SmartFarm_Ex5.json + DB
+
+![그림2](https://user-images.githubusercontent.com/60500365/143173100-a58aca5b-5321-4631-a669-771337415b35.png)
+
+
 ESP8266_AppInventor.ino
 
 ![그림1](https://user-images.githubusercontent.com/60500365/141729086-8e3e98e0-2ff8-4eb8-b5f1-5d1102071e0c.png)

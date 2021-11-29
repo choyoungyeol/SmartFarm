@@ -1,17 +1,14 @@
 CREATE TABLE `sensor` (
 `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`temp` int(10) DEFAULT 0,
-`humidity` int(10) unsigned DEFAULT 0,
-`lx` int(10) unsigned DEFAULT 0,
-`cdc` int(10) unsigned DEFAULT 0,
+`light` int(10) unsigned DEFAULT 0,
 `water` int(10) unsigned DEFAULT 0,
-`co2` int(10) unsigned DEFAULT 0,
+`temp` int(10) unsigned DEFAULT 0,
+`humidity` int(10) unsigned DEFAULT 0,
+`AutoValue` int(10) unsigned DEFAULT 0,
+`LightValue` int(10) unsigned DEFAULT 0,
+`FanValue` int(10) unsigned DEFAULT 0,
+`PumpValue` int(10) unsigned DEFAULT 0,
+`ServoValue` int(10) unsigned DEFAULT 0,
 `date` timestamp NULL DEFAULT current_timestamp(),
 PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4
-
-
-msg.topic = "INSERT INTO TestDB.sensor(light, water, temp, humidity, AutoValue, LightValue, FanValue, PumpValue, ServoValue, date)";
-msg.topic += " VALUES(" + obj['light'] + ", " + obj['water'] + ", " +  obj['temp'] + ", " + obj['humidity'] + ", " + obj['AutoValue'] + ", " +  obj['LightValue'] + ", " +  obj['FanValue'] + ", " + obj['PumpValue'] + ", " + obj['ServoValue'] +  ",  current_timestamp());";
-msg.payload = { "light":0, "water":0, "temp":0, "humidity":0, "AutoValue":0, "LightValue":0, "FanValue":0, "PumpValue":0, "ServoValue":0, "date": "2021-01-03 00:00:00" }
-return msg;

@@ -25,6 +25,11 @@ void loop() {
   float temperature = DHT.temperature;
   float humidity = DHT.humidity;
 
+
+  String data = String(temperature) + " ," + String(humidity);
+  Serial.println(data);
+  Bluetooth.println(data);
+
   if (Serial.available()) {
     delay(3);
     char c = Serial.read();
@@ -36,23 +41,21 @@ void loop() {
     }
   }
   delay(1000);
-
+  
   if (Bluetooth.available()) {
     delay(3);
     char c = Bluetooth.read();
     readString += c;
+
+    if (readString.length() > 0) {
+      if (readString == "a") {
+        digitalWrite(LED, HIGH);
+      }
+      if (readString == "b") {
+        digitalWrite(LED, LOW);
+      }
+    }
   }
 
-  if (readString.length() > 0) {
-    if (readString == "a") {
-      digitalWrite(LED, HIGH);
-    }
-    if (readString == "b") {
-      digitalWrite(LED, LOW);
-    }
-  }
-
-  String data = String(temperature) + " ," + String(humidity);
-  Serial.println(data);
   delay(2000);
 }

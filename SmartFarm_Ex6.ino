@@ -4,7 +4,7 @@
 #define LED 5
 #define Pin 8
 
-SoftwareSerial Bluetooth(0, 1);
+SoftwareSerial Bluetooth(2, 3);
 
 dht DHT;
 

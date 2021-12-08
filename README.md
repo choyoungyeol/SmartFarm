@@ -40,3 +40,9 @@ SmartFarm_Ex6.ino (Appinventor)
 
 ![그림3](https://user-images.githubusercontent.com/60500365/145157569-227c25e1-e985-4ad2-90fd-55eb28b82397.png)
 
+
+SmartFarm_Ex6.apk (Appinventor)
+
+![그림4](https://user-images.githubusercontent.com/60500365/145212370-bd47618d-ff32-4807-9885-52d3bbee581b.png)
+
+![그림5](https://user-images.githubusercontent.com/60500365/145212387-68108603-ae63-4d4e-ac17-c4f6c95c2444.png)

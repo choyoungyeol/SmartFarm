@@ -81,62 +81,24 @@ void loop()
     Water_Content = 0;
   }
 
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print(now.year());
-  lcd.print("/");
-  lcd.print(now.month());
-  lcd.print("/");
-  lcd.print(now.day());
-  lcd.setCursor(0, 1);
-  lcd.print(now.hour());
-  lcd.print(" hour: ");
-  lcd.print(now.minute());
-  lcd.print(" min");
-  delay(2000);
-
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Lux= ");
-  lcd.print(Ea);
-  lcd.setCursor(0, 1);
-  lcd.print("Water= ");
-  lcd.print(Water_Content);
-  lcd.print(" %");
-  delay(2000);
-
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Temp= ");
-  lcd.print(temperature);
-  lcd.print(" oC");
-  lcd.setCursor(0, 1);
-  lcd.print("R  H= ");
-  lcd.print(humidity);
-  lcd.print(" %");
-  delay(2000);
-
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Mode = ");
-  lcd.print(Auto);
-  delay(2000);
-
   if (Auto == 1) {
-    if (now.hour() >= 6 && now.hour() <= 18) {
+    if ((now.hour() >= 6) && (now.hour() <= 18)) {
       if (Ea <= 500) {
         digitalWrite(Light, HIGH);
         LightValue = 1;
-      } else {
+      }
+      if (Ea > 600) {
         digitalWrite(Light, LOW);
         LightValue = 0;
       }
-      if (temperature >= 25) {
+
+      if (temperature >= 30) {
         digitalWrite(Fan, HIGH);
         myservo.write(90);
         ServoValue = 1;
 
-      } else {
+      }
+      if (temperature < 20) {
         digitalWrite(Fan, LOW);
         myservo.write(0);
         ServoValue = 0;
@@ -144,12 +106,13 @@ void loop()
     } else {
       digitalWrite(Light, LOW);
       LightValue = 0;
-      if (temperature >= 25) {
+      if (temperature >= 30) {
         digitalWrite(Fan, HIGH);
         myservo.write(90);
         FanValue = 1;
         ServoValue = 1;
-      } else {
+      }
+      if (temperature < 20) {
         digitalWrite(Fan, LOW);
         myservo.write(0);
         FanValue = 0;
@@ -241,8 +204,57 @@ void loop()
       FanValue = 0;
     }
   }
+
+  if ((now.hour() % 2 == 0))  {
+    lcd.backlight();
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(now.year());
+    lcd.print("/");
+    lcd.print(now.month());
+    lcd.print("/");
+    lcd.print(now.day());
+    lcd.setCursor(0, 1);
+    lcd.print(now.hour());
+    lcd.print(" hour: ");
+    lcd.print(now.minute());
+    lcd.print(" min");
+    delay(2000);
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Lux= ");
+    lcd.print(Ea);
+    lcd.setCursor(0, 1);
+    lcd.print("Water= ");
+    lcd.print(Water_Content);
+    lcd.print(" %");
+    delay(2000);
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Temp= ");
+    lcd.print(temperature);
+    lcd.print(" oC");
+    lcd.setCursor(0, 1);
+    lcd.print("R  H= ");
+    lcd.print(humidity);
+    lcd.print(" %");
+    delay(2000);
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Mode = ");
+    lcd.print(Auto);
+    delay(2000);
+  } else {
+    lcd.noBacklight();
+  }
+
+
+
   Auto = Auto;
-  String data = String(Ea) + "," + String(Water_Content) + "," + String(temperature) + "," + String(humidity) + "," + String(Auto) + "," + String(LightValue)+ "," + String(FanValue)+ "," + String(PumpValue)+ "," + String(ServoValue);
+  String data = String(Ea) + "," + String(Water_Content) + "," + String(temperature) + "," + String(humidity) + "," + String(Auto) + "," + String(LightValue) + "," + String(FanValue) + "," + String(PumpValue) + "," + String(ServoValue);
   Serial.println(data);
   Serial1.println(data);
   delay(1000);

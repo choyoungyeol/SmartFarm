@@ -47,4 +47,6 @@ SmartFarm_Ex6.apk (Appinventor)
 
 ![그림5](https://user-images.githubusercontent.com/60500365/145212387-68108603-ae63-4d4e-ac17-c4f6c95c2444.png)
 
+SmartFarm_Ex7.json
+
 ![그림1](https://user-images.githubusercontent.com/60500365/177719065-88971ce5-63f5-4f2f-a43c-6f27d713e0be.png)

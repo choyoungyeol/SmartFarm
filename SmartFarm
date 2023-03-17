@@ -1,0 +1,53 @@
+[
+    {
+        "id": "75fbe52b89f6d638",
+        "type": "ui_switch",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "label": "모두 OFF",
+        "tooltip": "",
+        "group": "cb24f227e5673a6b",
+        "order": 9,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "z",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "y",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 200,
+        "y": 820,
+        "wires": [
+            [
+                "c11c59671fc74f86"
+            ]
+        ]
+    },
+    {
+        "id": "cb24f227e5673a6b",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "74bf98039dbc6001",
+        "order": 1,
+        "disp": true,
+        "width": 20
+    },
+    {
+        "id": "74bf98039dbc6001",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

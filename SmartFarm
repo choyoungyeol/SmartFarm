@@ -1,6 +1,164 @@
 [
     {
-        "id": "75fbe52b89f6d638",
+        "id": "27a3640c04d3edb7",
+        "type": "tab",
+        "label": "플로우 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "72fb87f641f8e0ea",
+        "type": "function",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar Relay1_value = parseFloat(output[3]);\nvar msg = {payload:Relay1_value};\n\nif(msg.payload == 1){\n    msg.payload = 'a';\n} \nelse {\n    msg.payload = 'b';\n}\nreturn [msg];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 120,
+        "wires": [
+            [
+                "c0b6bf3603ac9662",
+                "137dc0c8ebe9b10e"
+            ]
+        ]
+    },
+    {
+        "id": "0d902f4e1cf3b200",
+        "type": "serial in",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "serial": "0ea2fcaaccbfa388",
+        "x": 70,
+        "y": 240,
+        "wires": [
+            [
+                "72fb87f641f8e0ea",
+                "3f58fabe7c86408d",
+                "d8c9b97234286f71",
+                "c2dadb44b874aeeb",
+                "6cd01fe90c9edde5"
+            ]
+        ]
+    },
+    {
+        "id": "3f58fabe7c86408d",
+        "type": "function",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar Relay2_value = parseFloat(output[4]);\nvar msg = {payload:Relay2_value};\n\nif(msg.payload == 1){\n    msg.payload = 'c';\n} \nelse {\n    msg.payload = 'd';\n}\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 180,
+        "wires": [
+            [
+                "b5e241ca704ddb49",
+                "a90158f116675fce"
+            ]
+        ]
+    },
+    {
+        "id": "d8c9b97234286f71",
+        "type": "function",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar Relay3_value = parseFloat(output[5]);\nvar msg = {payload:Relay3_value};\n\nif(msg.payload == 1){\n    msg.payload = 'e';\n} \nelse {\n    msg.payload = 'f';\n}\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 240,
+        "wires": [
+            [
+                "12a226cc60de48f4",
+                "3f5604b9570d932a"
+            ]
+        ]
+    },
+    {
+        "id": "c2dadb44b874aeeb",
+        "type": "function",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar Relay4_value = parseFloat(output[6]);\nvar msg = {payload:Relay4_value};\n\nif(msg.payload == 1){\n    msg.payload = 'g';\n} \nelse {\n    msg.payload = 'h';\n}\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 300,
+        "wires": [
+            [
+                "5d1baa541485277b",
+                "daec08822a646399"
+            ]
+        ]
+    },
+    {
+        "id": "6cd01fe90c9edde5",
+        "type": "function",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar Windows_value = parseFloat(output[7]);\nvar msg = {payload:Windows_value};\n\nif(msg.payload == 1){\n    msg.payload = 'z';\n} \nelse {\n    msg.payload = 'y';\n}\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 360,
+        "wires": [
+            [
+                "c5e36c0989797a28"
+            ]
+        ]
+    },
+    {
+        "id": "b5e241ca704ddb49",
+        "type": "ui_switch",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "label": "Light (광)",
+        "tooltip": "",
+        "group": "cb24f227e5673a6b",
+        "order": 3,
+        "width": 6,
+        "height": 3,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "c",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "d",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 760,
+        "y": 180,
+        "wires": [
+            [
+                "c11c59671fc74f86"
+            ]
+        ]
+    },
+    {
+        "id": "c5e36c0989797a28",
         "type": "ui_switch",
         "z": "27a3640c04d3edb7",
         "name": "",
@@ -10,8 +168,8 @@
         "order": 9,
         "width": 6,
         "height": 1,
-        "passthru": true,
-        "decouple": "false",
+        "passthru": false,
+        "decouple": "true",
         "topic": "topic",
         "topicType": "msg",
         "style": "",
@@ -25,8 +183,8 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 200,
-        "y": 820,
+        "x": 760,
+        "y": 360,
         "wires": [
             [
                 "c11c59671fc74f86"
@@ -34,18 +192,440 @@
         ]
     },
     {
+        "id": "12a226cc60de48f4",
+        "type": "ui_switch",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "label": "Pump (펌프)",
+        "tooltip": "",
+        "group": "cb24f227e5673a6b",
+        "order": 5,
+        "width": 6,
+        "height": 3,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "e",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "f",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 770,
+        "y": 240,
+        "wires": [
+            [
+                "c11c59671fc74f86"
+            ]
+        ]
+    },
+    {
+        "id": "5d1baa541485277b",
+        "type": "ui_switch",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "label": "Windows (창문)",
+        "tooltip": "",
+        "group": "cb24f227e5673a6b",
+        "order": 7,
+        "width": 6,
+        "height": 3,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "g",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "h",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 780,
+        "y": 300,
+        "wires": [
+            [
+                "c11c59671fc74f86"
+            ]
+        ]
+    },
+    {
+        "id": "c0b6bf3603ac9662",
+        "type": "ui_switch",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "label": "Fan (환기팬)",
+        "tooltip": "",
+        "group": "cb24f227e5673a6b",
+        "order": 1,
+        "width": 6,
+        "height": 3,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "a",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "b",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 770,
+        "y": 120,
+        "wires": [
+            [
+                "c11c59671fc74f86"
+            ]
+        ]
+    },
+    {
+        "id": "c11c59671fc74f86",
+        "type": "serial out",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "serial": "90c2d770290e3da8",
+        "x": 1050,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "41df96522e678dc7",
+        "type": "ui_gauge",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "group": "cb24f227e5673a6b",
+        "order": 4,
+        "width": 4,
+        "height": 3,
+        "gtype": "donut",
+        "title": "Light",
+        "label": "Value",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 570,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "30fe2005fb24a145",
+        "type": "ui_gauge",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "group": "cb24f227e5673a6b",
+        "order": 6,
+        "width": 4,
+        "height": 3,
+        "gtype": "donut",
+        "title": "Pump",
+        "label": "Value",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 570,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "84e1f76a061d3723",
+        "type": "ui_gauge",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "group": "cb24f227e5673a6b",
+        "order": 8,
+        "width": 4,
+        "height": 3,
+        "gtype": "donut",
+        "title": "Windows",
+        "label": "Value",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 580,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "449e602f0d354e8e",
+        "type": "ui_gauge",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "group": "cb24f227e5673a6b",
+        "order": 2,
+        "width": 4,
+        "height": 3,
+        "gtype": "donut",
+        "title": "Fan",
+        "label": "Value",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 570,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "137dc0c8ebe9b10e",
+        "type": "change",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "a",
+                "fromt": "str",
+                "to": "1",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "b",
+                "fromt": "str",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 60,
+        "wires": [
+            [
+                "449e602f0d354e8e"
+            ]
+        ]
+    },
+    {
+        "id": "a90158f116675fce",
+        "type": "change",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "c",
+                "fromt": "str",
+                "to": "1",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "d",
+                "fromt": "str",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 140,
+        "wires": [
+            [
+                "41df96522e678dc7"
+            ]
+        ]
+    },
+    {
+        "id": "3f5604b9570d932a",
+        "type": "change",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "e",
+                "fromt": "str",
+                "to": "1",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "f",
+                "fromt": "str",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 200,
+        "wires": [
+            [
+                "30fe2005fb24a145"
+            ]
+        ]
+    },
+    {
+        "id": "daec08822a646399",
+        "type": "change",
+        "z": "27a3640c04d3edb7",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "e",
+                "fromt": "str",
+                "to": "1",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "f",
+                "fromt": "str",
+                "to": "0",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 260,
+        "wires": [
+            [
+                "84e1f76a061d3723"
+            ]
+        ]
+    },
+    {
+        "id": "938350b841d4630f",
+        "type": "ui_spacer",
+        "z": "27a3640c04d3edb7",
+        "name": "spacer",
+        "group": "cb24f227e5673a6b",
+        "order": 10,
+        "width": 14,
+        "height": 1
+    },
+    {
+        "id": "0ea2fcaaccbfa388",
+        "type": "serial-port",
+        "serialport": "COM7",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
         "id": "cb24f227e5673a6b",
         "type": "ui_group",
-        "name": "Group 1",
+        "name": "스마트팜",
         "tab": "74bf98039dbc6001",
         "order": 1,
         "disp": true,
-        "width": 20
+        "width": "20",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "90c2d770290e3da8",
+        "type": "serial-port",
+        "serialport": "COM7",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
     },
     {
         "id": "74bf98039dbc6001",
         "type": "ui_tab",
-        "name": "Home",
+        "name": "SmartFarm",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false

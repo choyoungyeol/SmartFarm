@@ -1,15 +1,15 @@
 [
     {
-        "id": "27a3640c04d3edb7",
+        "id": "a7413e14f51e6284",
         "type": "tab",
         "label": "플로우 2",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "72fb87f641f8e0ea",
+        "id": "0c5b038dd0338310",
         "type": "function",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "func": "var output = msg.payload.split(\",\");\nvar Relay1_value = parseFloat(output[3]);\nvar msg = {payload:Relay1_value};\n\nif(msg.payload == 1){\n    msg.payload = 'a';\n} \nelse {\n    msg.payload = 'b';\n}\nreturn [msg];\n",
         "outputs": 1,
@@ -21,33 +21,33 @@
         "y": 120,
         "wires": [
             [
-                "c0b6bf3603ac9662",
-                "137dc0c8ebe9b10e"
+                "7ff24b13f4bd7eed",
+                "ad6ef3f3256e2119"
             ]
         ]
     },
     {
-        "id": "0d902f4e1cf3b200",
+        "id": "f6be4ac6c1ea1953",
         "type": "serial in",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "serial": "0ea2fcaaccbfa388",
         "x": 70,
         "y": 240,
         "wires": [
             [
-                "72fb87f641f8e0ea",
-                "3f58fabe7c86408d",
-                "d8c9b97234286f71",
-                "c2dadb44b874aeeb",
-                "6cd01fe90c9edde5"
+                "0c5b038dd0338310",
+                "04ef53dd318f590f",
+                "0c18836d87b39cc0",
+                "8235fbd76cf098a7",
+                "da7593cfb91ec171"
             ]
         ]
     },
     {
-        "id": "3f58fabe7c86408d",
+        "id": "04ef53dd318f590f",
         "type": "function",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "func": "var output = msg.payload.split(\",\");\nvar Relay2_value = parseFloat(output[4]);\nvar msg = {payload:Relay2_value};\n\nif(msg.payload == 1){\n    msg.payload = 'c';\n} \nelse {\n    msg.payload = 'd';\n}\nreturn [msg];",
         "outputs": 1,
@@ -59,15 +59,15 @@
         "y": 180,
         "wires": [
             [
-                "b5e241ca704ddb49",
-                "a90158f116675fce"
+                "7cfa38df0e084eb9",
+                "2f738c12a48cd112"
             ]
         ]
     },
     {
-        "id": "d8c9b97234286f71",
+        "id": "0c18836d87b39cc0",
         "type": "function",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "func": "var output = msg.payload.split(\",\");\nvar Relay3_value = parseFloat(output[5]);\nvar msg = {payload:Relay3_value};\n\nif(msg.payload == 1){\n    msg.payload = 'e';\n} \nelse {\n    msg.payload = 'f';\n}\nreturn [msg];",
         "outputs": 1,
@@ -79,15 +79,15 @@
         "y": 240,
         "wires": [
             [
-                "12a226cc60de48f4",
-                "3f5604b9570d932a"
+                "812ed60bc58c856b",
+                "dae0f978c7279db0"
             ]
         ]
     },
     {
-        "id": "c2dadb44b874aeeb",
+        "id": "8235fbd76cf098a7",
         "type": "function",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "func": "var output = msg.payload.split(\",\");\nvar Relay4_value = parseFloat(output[6]);\nvar msg = {payload:Relay4_value};\n\nif(msg.payload == 1){\n    msg.payload = 'g';\n} \nelse {\n    msg.payload = 'h';\n}\nreturn [msg];",
         "outputs": 1,
@@ -99,15 +99,15 @@
         "y": 300,
         "wires": [
             [
-                "5d1baa541485277b",
-                "daec08822a646399"
+                "caa94c033cc193a1",
+                "eff0231b9d5e8180"
             ]
         ]
     },
     {
-        "id": "6cd01fe90c9edde5",
+        "id": "da7593cfb91ec171",
         "type": "function",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "func": "var output = msg.payload.split(\",\");\nvar Windows_value = parseFloat(output[7]);\nvar msg = {payload:Windows_value};\n\nif(msg.payload == 1){\n    msg.payload = 'z';\n} \nelse {\n    msg.payload = 'y';\n}\nreturn [msg];",
         "outputs": 1,
@@ -119,14 +119,14 @@
         "y": 360,
         "wires": [
             [
-                "c5e36c0989797a28"
+                "e53f80ccc09ddf7f"
             ]
         ]
     },
     {
-        "id": "b5e241ca704ddb49",
+        "id": "7cfa38df0e084eb9",
         "type": "ui_switch",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "label": "Light (광)",
         "tooltip": "",
@@ -153,14 +153,14 @@
         "y": 180,
         "wires": [
             [
-                "c11c59671fc74f86"
+                "537dd29d615c7bfe"
             ]
         ]
     },
     {
-        "id": "c5e36c0989797a28",
+        "id": "e53f80ccc09ddf7f",
         "type": "ui_switch",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "label": "모두 OFF",
         "tooltip": "",
@@ -187,14 +187,14 @@
         "y": 360,
         "wires": [
             [
-                "c11c59671fc74f86"
+                "537dd29d615c7bfe"
             ]
         ]
     },
     {
-        "id": "12a226cc60de48f4",
+        "id": "812ed60bc58c856b",
         "type": "ui_switch",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "label": "Pump (펌프)",
         "tooltip": "",
@@ -221,14 +221,14 @@
         "y": 240,
         "wires": [
             [
-                "c11c59671fc74f86"
+                "537dd29d615c7bfe"
             ]
         ]
     },
     {
-        "id": "5d1baa541485277b",
+        "id": "caa94c033cc193a1",
         "type": "ui_switch",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "label": "Windows (창문)",
         "tooltip": "",
@@ -255,14 +255,14 @@
         "y": 300,
         "wires": [
             [
-                "c11c59671fc74f86"
+                "537dd29d615c7bfe"
             ]
         ]
     },
     {
-        "id": "c0b6bf3603ac9662",
+        "id": "7ff24b13f4bd7eed",
         "type": "ui_switch",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "label": "Fan (환기팬)",
         "tooltip": "",
@@ -289,14 +289,14 @@
         "y": 120,
         "wires": [
             [
-                "c11c59671fc74f86"
+                "537dd29d615c7bfe"
             ]
         ]
     },
     {
-        "id": "c11c59671fc74f86",
+        "id": "537dd29d615c7bfe",
         "type": "serial out",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "serial": "90c2d770290e3da8",
         "x": 1050,
@@ -304,9 +304,9 @@
         "wires": []
     },
     {
-        "id": "41df96522e678dc7",
+        "id": "e65daa298cfa045d",
         "type": "ui_gauge",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "group": "cb24f227e5673a6b",
         "order": 4,
@@ -331,9 +331,9 @@
         "wires": []
     },
     {
-        "id": "30fe2005fb24a145",
+        "id": "8673566055cbdcf9",
         "type": "ui_gauge",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "group": "cb24f227e5673a6b",
         "order": 6,
@@ -358,9 +358,9 @@
         "wires": []
     },
     {
-        "id": "84e1f76a061d3723",
+        "id": "bd8a1519bedc567e",
         "type": "ui_gauge",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "group": "cb24f227e5673a6b",
         "order": 8,
@@ -385,9 +385,9 @@
         "wires": []
     },
     {
-        "id": "449e602f0d354e8e",
+        "id": "388903e6310df975",
         "type": "ui_gauge",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "group": "cb24f227e5673a6b",
         "order": 2,
@@ -412,9 +412,9 @@
         "wires": []
     },
     {
-        "id": "137dc0c8ebe9b10e",
+        "id": "ad6ef3f3256e2119",
         "type": "change",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "rules": [
             {
@@ -445,14 +445,14 @@
         "y": 60,
         "wires": [
             [
-                "449e602f0d354e8e"
+                "388903e6310df975"
             ]
         ]
     },
     {
-        "id": "a90158f116675fce",
+        "id": "2f738c12a48cd112",
         "type": "change",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "rules": [
             {
@@ -483,14 +483,14 @@
         "y": 140,
         "wires": [
             [
-                "41df96522e678dc7"
+                "e65daa298cfa045d"
             ]
         ]
     },
     {
-        "id": "3f5604b9570d932a",
+        "id": "dae0f978c7279db0",
         "type": "change",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "rules": [
             {
@@ -521,21 +521,21 @@
         "y": 200,
         "wires": [
             [
-                "30fe2005fb24a145"
+                "8673566055cbdcf9"
             ]
         ]
     },
     {
-        "id": "daec08822a646399",
+        "id": "eff0231b9d5e8180",
         "type": "change",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "",
         "rules": [
             {
                 "t": "change",
                 "p": "payload",
                 "pt": "msg",
-                "from": "e",
+                "from": "g",
                 "fromt": "str",
                 "to": "1",
                 "tot": "str"
@@ -544,7 +544,7 @@
                 "t": "change",
                 "p": "payload",
                 "pt": "msg",
-                "from": "f",
+                "from": "h",
                 "fromt": "str",
                 "to": "0",
                 "tot": "str"
@@ -559,14 +559,14 @@
         "y": 260,
         "wires": [
             [
-                "84e1f76a061d3723"
+                "bd8a1519bedc567e"
             ]
         ]
     },
     {
-        "id": "938350b841d4630f",
+        "id": "fa36d13fdee42911",
         "type": "ui_spacer",
-        "z": "27a3640c04d3edb7",
+        "z": "a7413e14f51e6284",
         "name": "spacer",
         "group": "cb24f227e5673a6b",
         "order": 10,

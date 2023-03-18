@@ -55,4 +55,7 @@ SmartFarm
 
 ![그림1](https://user-images.githubusercontent.com/60500365/226076438-73a5fb7b-0fbd-430c-b60a-d8f0ce759590.png)
 
+SmartFarm2
+
+![그림2](https://user-images.githubusercontent.com/60500365/226077613-fecc2b71-52e1-4bdd-af96-681220b1c477.png)
 

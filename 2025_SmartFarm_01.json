@@ -1,0 +1,260 @@
+[
+    {
+        "id": "c29c9d185e6bd9a7",
+        "type": "serial out",
+        "z": "a0162065df69413e",
+        "name": "",
+        "serial": "90c2d770290e3da8",
+        "x": 1070,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "40ba8bedc773ac16",
+        "type": "ui_switch",
+        "z": "a0162065df69413e",
+        "name": "",
+        "label": "Light (광)",
+        "tooltip": "",
+        "group": "a76c012c55eb1cfc",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "payload",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "c",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "d",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 760,
+        "y": 520,
+        "wires": [
+            [
+                "c29c9d185e6bd9a7"
+            ]
+        ]
+    },
+    {
+        "id": "2596dbe8b770b20f",
+        "type": "ui_switch",
+        "z": "a0162065df69413e",
+        "name": "",
+        "label": "Automation (자동유무)",
+        "tooltip": "",
+        "group": "a76c012c55eb1cfc",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "payload",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "x",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "y",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 800,
+        "y": 580,
+        "wires": [
+            [
+                "c29c9d185e6bd9a7"
+            ]
+        ]
+    },
+    {
+        "id": "ae50cbdcdce478ca",
+        "type": "ui_switch",
+        "z": "a0162065df69413e",
+        "name": "",
+        "label": "Pump (펌프)",
+        "tooltip": "",
+        "group": "a76c012c55eb1cfc",
+        "order": 6,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "payload",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "e",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "f",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 770,
+        "y": 400,
+        "wires": [
+            [
+                "c29c9d185e6bd9a7"
+            ]
+        ]
+    },
+    {
+        "id": "1dfd2ddc2e563b73",
+        "type": "ui_switch",
+        "z": "a0162065df69413e",
+        "name": "",
+        "label": "Fan (환기팬)",
+        "tooltip": "",
+        "group": "a76c012c55eb1cfc",
+        "order": 4,
+        "width": 6,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "payload",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "a",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "b",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 770,
+        "y": 460,
+        "wires": [
+            [
+                "c29c9d185e6bd9a7"
+            ]
+        ]
+    },
+    {
+        "id": "c6a986cda13dad01",
+        "type": "function",
+        "z": "a0162065df69413e",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar Auto = parseFloat(output[8]);\nvar msg = {payload:Auto};\n\nif(msg.payload == 1){\n    msg.payload = 'x';\n} \nelse {\n    msg.payload = 'y';\n}\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 580,
+        "wires": [
+            [
+                "2596dbe8b770b20f"
+            ]
+        ]
+    },
+    {
+        "id": "59bfd049e34894e9",
+        "type": "function",
+        "z": "a0162065df69413e",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar FanValue = parseFloat(output[6]);\nvar msg = {payload:FanValue};\n\nif(msg.payload == 1){\n    msg.payload = 'a';\n} \nelse {\n    msg.payload = 'b';\n}\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 460,
+        "wires": [
+            [
+                "1dfd2ddc2e563b73"
+            ]
+        ]
+    },
+    {
+        "id": "2db9d98f11071dba",
+        "type": "function",
+        "z": "a0162065df69413e",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar LightValue = parseFloat(output[7]);\nvar msg = {payload:LightValue};\n\nif(msg.payload == 1){\n    msg.payload = 'c';\n} \nelse {\n    msg.payload = 'd';\n}\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 520,
+        "wires": [
+            [
+                "40ba8bedc773ac16"
+            ]
+        ]
+    },
+    {
+        "id": "64c8f56dca4aefe8",
+        "type": "function",
+        "z": "a0162065df69413e",
+        "name": "",
+        "func": "var output = msg.payload.split(\",\");\nvar PumpValue = parseFloat(output[5]);\nvar msg = {payload:PumpValue};\n\nif(msg.payload == 1){\n    msg.payload = 'e';\n} \nelse {\n    msg.payload = 'f';\n}\nreturn [msg];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 400,
+        "wires": [
+            [
+                "ae50cbdcdce478ca"
+            ]
+        ]
+    },
+    {
+        "id": "90c2d770290e3da8",
+        "type": "serial-port",
+        "serialport": "COM7",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "a76c012c55eb1cfc",
+        "type": "ui_group",
+        "name": "Group 1",
+        "tab": "a63f44f3531dcf2c",
+        "order": 1,
+        "disp": true,
+        "width": 18
+    },
+    {
+        "id": "a63f44f3531dcf2c",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
